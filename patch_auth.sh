@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/Auth.tsx
 import { useState, useEffect } from 'react';
 import { callAPI } from './api';
 import { Loader2, ArrowRight, Mail, Moon, Sun } from 'lucide-react';
@@ -72,9 +73,6 @@ export default function Auth({ onLogin }: AuthProps) {
       payload.name = name;
       payload.role = "Developer";
       payload.organization = "N/A";
-    } else {
-      payload.device = navigator.userAgent;
-      payload.ip = "Client";
     }
     const res = await callAPI(payload);
     setLoading(false);
@@ -90,7 +88,7 @@ export default function Auth({ onLogin }: AuthProps) {
       <div 
         className="absolute inset-0 bg-cover bg-center transition-all duration-1000 opacity-60 dark:opacity-40"
         style={{
-          backgroundImage: `url("${isDark ? 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2034&auto=format&fit=crop' : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop'}")`,
+          backgroundImage: \`url("\${isDark ? 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2034&auto=format&fit=crop' : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop'}")\`,
         }}
       />
       <div className="absolute inset-0 bg-white/50 dark:bg-black/70 backdrop-blur-sm transition-colors duration-500"></div>
@@ -108,7 +106,7 @@ export default function Auth({ onLogin }: AuthProps) {
         
         <div className="flex flex-col items-center mb-10 relative z-10">
           <div className="flex items-center justify-center gap-3 mb-5 animate-in slide-in-from-top-4 duration-500">
-            <img src={logoImage} alt="Veda Labs Logo" className="h-10 w-auto object-contain transition-all duration-300" />
+            <img src={logoImage} alt="Veda Labs Logo" className="h-10 w-auto object-contain dark:brightness-0 dark:invert transition-all duration-300" />
             <span className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Veda <span className="text-blue-600 dark:text-blue-500">Labs</span></span>
           </div>
           <h2 className="text-lg font-medium text-gray-600 dark:text-gray-400 animate-in fade-in duration-700">Gateway Authentication</h2>
@@ -207,3 +205,4 @@ export default function Auth({ onLogin }: AuthProps) {
     </div>
   );
 }
+INNER_EOF

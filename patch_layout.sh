@@ -1,5 +1,6 @@
+cat << 'INNER_EOF' > src/Layout.tsx
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, BarChart3, Key, FileText, BookOpen, LogOut, Moon, Sun, Menu, Gauge, Sparkles, User } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Key, FileText, BookOpen, LogOut, Moon, Sun, Menu, Gauge, Sparkles } from 'lucide-react';
 import logoImage from '../logo.png';
 
 interface LayoutProps {
@@ -36,16 +37,20 @@ export default function Layout({ children, currentView, setCurrentView, userName
     { id: 'statements', label: 'Statements', icon: FileText },
     { id: 'ratelimits', label: 'Rate Limits', icon: Gauge },
     { id: 'docs', label: 'API Documentation', icon: BookOpen },
-    { id: 'profile', label: 'Profile Settings', icon: User },
     { id: 'legal', label: 'Legal & Info', icon: FileText },
   ];
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 18) return 'Good Afternoon';
+    return 'Good Evening';
+  };
 
   const currentTitle = navItems.find(n => n.id === currentView)?.label || 'Console';
-  const displayTitle = currentView === 'dashboard' ? 'API Dashboard' : currentTitle;
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-[#0a0a0c] text-gray-900 dark:text-gray-100 overflow-hidden font-sans transition-colors duration-300 select-none">
+    <div className="flex h-screen bg-gray-50 dark:bg-[#0a0a0c] text-gray-900 dark:text-gray-100 overflow-hidden font-sans transition-colors duration-300">
       
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
@@ -59,7 +64,7 @@ export default function Layout({ children, currentView, setCurrentView, userName
       <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#111216] border-r border-gray-200 dark:border-gray-800/60 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:flex flex-col shadow-sm ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-gray-100 dark:border-gray-800/60">
           <div className="flex items-center gap-3">
-            <img src={logoImage} alt="Veda Labs Logo" className="h-7 w-auto object-contain transition-all duration-300" />
+            <img src={logoImage} alt="Veda Labs Logo" className="h-7 w-auto object-contain dark:brightness-0 dark:invert transition-all duration-300" />
             <span className="text-[17px] font-bold tracking-tight text-gray-900 dark:text-white">Veda <span className="text-blue-600 dark:text-blue-500">Labs</span></span>
           </div>
         </div>
@@ -126,24 +131,18 @@ export default function Layout({ children, currentView, setCurrentView, userName
             >
               <Menu size={20} strokeWidth={1.5} />
             </button>
-            <h1 className="text-[17px] font-semibold tracking-tight text-gray-900 dark:text-white hidden sm:block">{displayTitle}</h1>
+            <h1 className="text-[17px] font-semibold tracking-tight text-gray-900 dark:text-white hidden sm:block">{currentTitle}</h1>
           </div>
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-5 sm:gap-8">
             <div className="text-right flex flex-col items-end">
+              <div className="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold">{getGreeting()}</div>
               <div className="text-[15px] font-medium tracking-tight text-gray-900 dark:text-gray-100">{userName}</div>
             </div>
-            <button 
-              onClick={() => setCurrentView('profile')}
-              className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors border border-blue-100 dark:border-blue-800/30 outline-none focus:ring-0 shadow-sm"
-              title="Profile Settings"
-            >
-              <User size={18} strokeWidth={2} />
-            </button>
           </div>
         </header>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-8 md:p-10 animate-in fade-in duration-500 select-text">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 md:p-10 animate-in fade-in duration-500">
           <div className="max-w-6xl mx-auto w-full">
             {children}
           </div>
@@ -153,3 +152,4 @@ export default function Layout({ children, currentView, setCurrentView, userName
     </div>
   );
 }
+INNER_EOF

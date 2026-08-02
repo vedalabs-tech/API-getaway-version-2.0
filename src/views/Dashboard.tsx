@@ -5,19 +5,31 @@ import { Activity, Zap, ShieldAlert, AlertTriangle, Infinity } from 'lucide-reac
 interface DashboardProps {
   logs: LogEntry[];
   loading: boolean;
+  userName: string;
+  healthScore: number;
 }
 
-export default function Dashboard({ logs, loading }: DashboardProps) {
+export default function Dashboard({ logs, loading, userName, healthScore }: DashboardProps) {
   const requests = logs.length;
   const tokens = logs.reduce((acc, log) => acc + (parseInt(log.tokens as string) || 0), 0);
   const errors = logs.filter(l => l.status != 200 && l.status != "200").length;
-  const health = requests > 0 ? ((requests - errors) / requests) * 100 : 100;
+  // Use the healthScore passed from the backend if available
+  const health = healthScore;
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 18) return 'Good Afternoon';
+    return 'Good Evening';
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       
       <div className="mb-2">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">API Dashboard</h2>
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {getGreeting()}, {userName}
+        </h2>
         <p className={`mt-2 ${loading ? 'shining-wave font-medium' : 'text-gray-500 dark:text-gray-400'}`}>
           {loading ? 'Aggregating gateway metrics...' : 'Monitor your gateway health, token consumption, and API requests.'}
         </p>

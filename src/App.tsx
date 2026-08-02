@@ -9,6 +9,7 @@ import Docs from './views/Docs';
 import RateLimits from './views/RateLimits';
 import Legal from './views/Legal';
 import Changelog from './views/Changelog';
+import Profile from './views/Profile';
 import { callAPI } from './api';
 
 export type LogEntry = {
@@ -23,11 +24,13 @@ export default function App() {
   const [name, setName] = useState<string | null>(localStorage.getItem('veda_name'));
   const [currentView, setCurrentView] = useState('dashboard');
   const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [healthScore, setHealthScore] = useState<number>(100);
   const [loadingLogs, setLoadingLogs] = useState(true);
 
   useEffect(() => {
     if (email) {
       loadLogs();
+      loadHealthScore();
     }
   }, [email]);
 
@@ -42,6 +45,13 @@ export default function App() {
     setLoadingLogs(false);
   };
 
+  const loadHealthScore = async () => {
+    const res = await callAPI({ action: "get_health_score", email });
+    if (res?.status === "success" && typeof res.health_score === 'number') {
+      setHealthScore(res.health_score);
+    }
+  };
+
   const handleLogin = (userEmail: string, userName: string) => {
     localStorage.setItem('veda_email', userEmail);
     localStorage.setItem('veda_name', userName);
@@ -49,7 +59,15 @@ export default function App() {
     setName(userName);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    if (email) {
+      callAPI({ 
+        action: "log_out", 
+        email, 
+        device: navigator.userAgent, 
+        ip: "Client" // IP usually handled server-side if not using an external service, we just pass Client for now
+      }).catch(console.error);
+    }
     localStorage.clear();
     setEmail(null);
     setName(null);
@@ -62,15 +80,16 @@ export default function App() {
 
   const renderView = () => {
     switch (currentView) {
-      case 'dashboard': return <Dashboard logs={logs} loading={loadingLogs} />;
+      case 'dashboard': return <Dashboard logs={logs} loading={loadingLogs} userName={name || "Developer"} healthScore={healthScore} />;
       case 'changelog': return <Changelog />;
       case 'analytics': return <Analytics logs={logs} />;
-      case 'security': return <Security email={email} onLogout={handleLogout} />;
+      case 'security': return <Security email={email} />;
       case 'statements': return <Statements logs={logs} loading={loadingLogs} email={email} />;
       case 'ratelimits': return <RateLimits />;
       case 'docs': return <Docs />;
       case 'legal': return <Legal />;
-      default: return <Dashboard logs={logs} loading={loadingLogs} />;
+      case 'profile': return <Profile email={email} onLogout={handleLogout} />;
+      default: return <Dashboard logs={logs} loading={loadingLogs} userName={name || "Developer"} healthScore={healthScore} />;
     }
   };
 
