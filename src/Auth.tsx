@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { callAPI } from './api';
 import { Loader2, ArrowRight, Mail, Moon, Sun, X } from 'lucide-react';
+import logoImage from '../logo.png';
 
 interface AuthProps {
   onLogin: (email: string, name: string) => void;
@@ -108,7 +109,7 @@ export default function Auth({ onLogin }: AuthProps) {
           
           <div className="flex flex-col items-center mb-8 relative z-10">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <img src="/logo.png" alt="Veda Labs Logo" className="h-10 w-auto object-contain dark:invert-[0.9] dark:hue-rotate-180" style={{ filter: isDark ? 'brightness(0) invert(1)' : 'none' }} />
+              <img src={logoImage} alt="Veda Labs Logo" className="h-10 w-auto object-contain dark:invert-[0.9] dark:hue-rotate-180" style={{ filter: isDark ? 'brightness(0) invert(1)' : 'none' }} />
               <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Veda <span className="text-blue-600 dark:text-blue-500">Labs</span></span>
             </div>
             <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Veda Gateway</h2>

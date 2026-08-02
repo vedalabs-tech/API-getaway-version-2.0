@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LayoutDashboard, BarChart3, Key, FileText, BookOpen, LogOut, Moon, Sun, Menu, Gauge, Sparkles } from 'lucide-react';
+import logoImage from '../logo.png';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -58,7 +59,7 @@ export default function Layout({ children, currentView, setCurrentView, userName
       <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#fcfcfc] dark:bg-[#111216] border-r border-gray-100 dark:border-gray-800/60 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:flex flex-col ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-gray-100 dark:border-gray-800/60">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Veda Labs Logo" className="h-7 w-auto object-contain dark:invert-[0.9] dark:hue-rotate-180" style={{ filter: isDark ? 'brightness(0) invert(1)' : 'none' }} />
+            <img src={logoImage} alt="Veda Labs Logo" className="h-7 w-auto object-contain dark:invert-[0.9] dark:hue-rotate-180" style={{ filter: isDark ? 'brightness(0) invert(1)' : 'none' }} />
             <span className="text-[17px] font-bold tracking-tight text-gray-900 dark:text-white">Veda <span className="text-blue-600 dark:text-blue-500">Labs</span></span>
           </div>
         </div>
