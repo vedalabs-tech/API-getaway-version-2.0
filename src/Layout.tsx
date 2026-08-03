@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, BarChart3, Key, FileText, BookOpen, LogOut, Moon, Sun, Menu, Gauge, Sparkles, User } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Key, FileText, BookOpen, FileCode, LogOut, Moon, Sun, Menu, Gauge, Sparkles, User } from 'lucide-react';
 import logoImage from '../logo.png';
 
 interface LayoutProps {
@@ -37,6 +37,7 @@ export default function Layout({ children, currentView, setCurrentView, userName
     { id: 'ratelimits', label: 'Rate Limits', icon: Gauge },
     { id: 'profile', label: 'Profile Settings', icon: User },
     { id: 'legal', label: 'User Manual', icon: BookOpen },
+    { id: 'docs', label: 'Documentation', icon: FileCode },
   ];
 
 

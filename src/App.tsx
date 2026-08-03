@@ -7,6 +7,7 @@ import Security from './views/Security';
 import Statements from './views/Statements';
 import RateLimits from './views/RateLimits';
 import Legal from './views/Legal';
+import ApiDocs from './views/ApiDocs';
 import Changelog from './views/Changelog';
 import Profile from './views/Profile';
 import { callAPI } from './api';
@@ -86,6 +87,7 @@ export default function App() {
       case 'statements': return <Statements logs={logs} loading={loadingLogs} email={email} />;
       case 'ratelimits': return <RateLimits />;
       case 'legal': return <Legal />;
+      case 'docs': return <ApiDocs />;
       case 'profile': return <Profile email={email} onLogout={handleLogout} />;
       default: return <Dashboard logs={logs} loading={loadingLogs} userName={name || "Developer"} healthScore={healthScore} />;
     }
