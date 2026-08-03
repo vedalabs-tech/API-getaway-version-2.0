@@ -35,9 +35,8 @@ export default function Layout({ children, currentView, setCurrentView, userName
     { id: 'security', label: 'Security & Keys', icon: Key },
     { id: 'statements', label: 'Statements', icon: FileText },
     { id: 'ratelimits', label: 'Rate Limits', icon: Gauge },
-    { id: 'docs', label: 'API Documentation', icon: BookOpen },
     { id: 'profile', label: 'Profile Settings', icon: User },
-    { id: 'legal', label: 'Legal & Info', icon: FileText },
+    { id: 'legal', label: 'User Manual', icon: BookOpen },
   ];
 
 

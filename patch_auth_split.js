@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import fs from 'fs';
+
+const code = `import { useState, useEffect, useRef } from 'react';
 import { callAPI } from './api';
 import { Loader2, ArrowRight, Mail, Moon, Sun, CheckSquare, Square, FileText, ChevronRight, ShieldCheck, Scale, Quote } from 'lucide-react';
 import logoImage from '../logo.png';
@@ -325,7 +327,7 @@ export default function Auth({ onLogin }: AuthProps) {
                 <input 
                   type="text" 
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0,6))}
+                  onChange={(e) => setOtp(e.target.value.replace(/\\D/g, '').slice(0,6))}
                   placeholder="• • • • • •"
                   className="w-full px-5 py-5 bg-gray-50 dark:bg-[#111216] border border-gray-200 dark:border-gray-800 rounded-2xl outline-none focus:bg-white dark:focus:bg-black focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-gray-900 dark:text-white transition-all text-center text-4xl font-mono tracking-[0.5em] font-bold placeholder:font-sans placeholder:tracking-normal placeholder:font-normal placeholder:text-2xl placeholder:text-gray-300 dark:placeholder:text-gray-700"
                   required
@@ -388,7 +390,7 @@ export default function Auth({ onLogin }: AuthProps) {
               <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full mt-4 overflow-hidden">
                 <div 
                   className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-500 ease-out" 
-                  style={{ width: `${((termStep + 1) / 3) * 100}%` }}
+                  style={{ width: \`\${((termStep + 1) / 3) * 100}%\` }}
                 ></div>
               </div>
             </div>
@@ -449,11 +451,11 @@ export default function Auth({ onLogin }: AuthProps) {
                 <button 
                   onClick={handleNextStep}
                   disabled={!canProceedStep}
-                  className={`w-full sm:w-auto px-8 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 outline-none focus:ring-0 order-1 sm:order-2 ${
+                  className={\`w-full sm:w-auto px-8 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 outline-none focus:ring-0 order-1 sm:order-2 \${
                     canProceedStep 
                       ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/25 hover:scale-[1.02] active:scale-95' 
                       : 'bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
-                  }`}
+                  }\`}
                 >
                   Next <ArrowRight size={18} />
                 </button>
@@ -461,11 +463,11 @@ export default function Auth({ onLogin }: AuthProps) {
                 <button 
                   onClick={acceptTerms}
                   disabled={!canProceedStep}
-                  className={`w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all outline-none focus:ring-0 order-1 sm:order-2 ${
+                  className={\`w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all outline-none focus:ring-0 order-1 sm:order-2 \${
                     canProceedStep 
                       ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-500/25 hover:scale-[1.02] active:scale-95' 
                       : 'bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
-                  }`}
+                  }\`}
                 >
                   I understood. Please implement that change.
                 </button>
@@ -478,3 +480,6 @@ export default function Auth({ onLogin }: AuthProps) {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('src/Auth.tsx', code);

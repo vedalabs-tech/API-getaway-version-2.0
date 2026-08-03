@@ -1,4 +1,6 @@
-import { useState } from 'react';
+const fs = require('fs');
+
+const code = `import { useState } from 'react';
 import { Book, Download, Loader2, Languages } from 'lucide-react';
 import logoImage from '../../logo.png';
 import html2pdf from 'html2pdf.js';
@@ -71,7 +73,7 @@ export default function Legal() {
     footer.style.borderTop = '1px solid #eee';
     footer.style.fontSize = '12px';
     footer.style.color = '#777';
-    footer.innerHTML = `Proudly developed in India, made for Bharat.<br/>Developed by Veda Labs | Divy Patel`;
+    footer.innerHTML = \`Proudly developed in India, made for Bharat.<br/>Developed by Veda Labs | Divy Patel\`;
     wrapper.appendChild(footer);
     
     wrapper.style.position = 'absolute';
@@ -82,10 +84,10 @@ export default function Legal() {
     
     const opt = {
       margin:       15,
-      filename:     `User_Manual_${lang}.pdf`,
-      image:        { type: 'jpeg' as const, quality: 0.98 },
+      filename:     \`User_Manual_\${lang}.pdf\`,
+      image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { scale: 2, windowWidth: 800 },
-      jsPDF:        { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const }
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     
     html2pdf().set(opt).from(wrapper).save().then(() => {
@@ -164,3 +166,6 @@ export default function Legal() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('src/views/Legal.tsx', code);

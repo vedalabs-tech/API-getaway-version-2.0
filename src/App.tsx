@@ -5,7 +5,6 @@ import Dashboard from './views/Dashboard';
 import Analytics from './views/Analytics';
 import Security from './views/Security';
 import Statements from './views/Statements';
-import Docs from './views/Docs';
 import RateLimits from './views/RateLimits';
 import Legal from './views/Legal';
 import Changelog from './views/Changelog';
@@ -86,7 +85,6 @@ export default function App() {
       case 'security': return <Security email={email} />;
       case 'statements': return <Statements logs={logs} loading={loadingLogs} email={email} />;
       case 'ratelimits': return <RateLimits />;
-      case 'docs': return <Docs />;
       case 'legal': return <Legal />;
       case 'profile': return <Profile email={email} onLogout={handleLogout} />;
       default: return <Dashboard logs={logs} loading={loadingLogs} userName={name || "Developer"} healthScore={healthScore} />;
