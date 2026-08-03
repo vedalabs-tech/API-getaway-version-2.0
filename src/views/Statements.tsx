@@ -10,56 +10,28 @@ interface StatementsProps {
 
 export default function Statements({ logs, loading, email }: StatementsProps) {
   
-  const generateStatement = () => {
-    if(logs.length === 0) return alert("No data to export");
-    const printWin = window.open('', '_blank');
-    if (!printWin) return;
-    
-    const rows = logs.map(l => `
-      <tr>
-        <td style="padding:12px; border-bottom:1px solid #e2e8f0; color:#475569;">${new Date(l.timestamp).toLocaleString()}</td>
-        <td style="padding:12px; border-bottom:1px solid #e2e8f0; font-family:monospace; color:#0f172a;">${l.model}</td>
-        <td style="padding:12px; border-bottom:1px solid #e2e8f0; color:#0f172a;">${l.tokens}</td>
-        <td style="padding:12px; border-bottom:1px solid #e2e8f0; color:#0f172a;">${l.status}</td>
-      </tr>
-    `).join('');
-    
-    const html = `
-      <html>
-        <head>
-          <title>Veda Labs - Statement</title>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; padding: 40px; color: #0f172a; max-width: 800px; margin: 0 auto; }
-            .header { display: flex; justify-content: space-between; border-bottom: 2px solid #2563eb; padding-bottom: 24px; margin-bottom: 32px; }
-            h2 { margin: 0; font-size: 24px; font-weight: 600; }
-            p { margin: 4px 0 0 0; color: #64748b; font-size: 14px; }
-            table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
-            th { background: #f8fafc; padding: 12px; border-bottom: 1px solid #cbd5e1; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; }
-            .footer { margin-top: 60px; text-align: center; font-size: 12px; color: #94a3b8; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <div>
-              <h2>Veda Labs Gateway</h2>
-              <p>Official API Usage Statement</p>
-            </div>
-            <div style="text-align:right; font-size: 14px;">
-              <strong>Account:</strong> ${email}<br>
-              <strong>Date Generated:</strong> ${new Date().toLocaleDateString()}
-            </div>
-          </div>
-          <table>
-            <thead><tr><th>Timestamp</th><th>Model Used</th><th>Tokens</th><th>Status</th></tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-          <div class="footer">System Generated Report — Veda Labs API Infrastructure</div>
-          <script>window.onload = function() { window.print(); }</script>
-        </body>
-      </html>
-    `;
-    printWin.document.write(html);
-    printWin.document.close();
+    const generateStatement = () => {
+    if(logs.length === 0) return;
+    const headers = ["Timestamp", "Model Used", "Tokens", "Status"];
+    const csvRows = [headers.join(",")];
+    logs.forEach(l => {
+      csvRows.push([
+        new Date(l.timestamp).toLocaleString().replace(/,/g, ''),
+        l.model,
+        l.tokens,
+        l.status
+      ].join(","));
+    });
+    const csvContent = csvRows.join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `veda_statement_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -75,7 +47,7 @@ export default function Statements({ logs, loading, email }: StatementsProps) {
             onClick={generateStatement}
             className="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors flex items-center gap-2 no-tap-highlight shadow-sm btn-glow"
           >
-            <Download size={16} /> Export PDF
+            <Download size={16} /> Export CSV
           </button>
         </div>
 
