@@ -8,6 +8,8 @@ import Security from './views/Security';
 import Statements from './views/Statements';
 import RateLimits from './views/RateLimits';
 import Legal from './views/Legal';
+import PrivacyPolicy from './views/PrivacyPolicy';
+import TermsOfService from './views/TermsOfService';
 import ApiDocs from './views/ApiDocs';
 import Changelog from './views/Changelog';
 import Profile from './views/Profile';
@@ -77,14 +79,27 @@ export default function App() {
   };
 
   const path = window.location.pathname;
-  if (path === '/privacy' || path === '/terms') {
+  if (path === '/privacy') {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0c] text-gray-900 dark:text-gray-100 flex flex-col font-['Inter',sans-serif]">
         <nav className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <a href="/" className="text-xl font-bold tracking-tight">Veda Labs</a>
         </nav>
         <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12">
-          <Legal />
+          <PrivacyPolicy />
+        </main>
+      </div>
+    );
+  }
+
+  if (path === '/terms') {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0c] text-gray-900 dark:text-gray-100 flex flex-col font-['Inter',sans-serif]">
+        <nav className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+          <a href="/" className="text-xl font-bold tracking-tight">Veda Labs</a>
+        </nav>
+        <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12">
+          <TermsOfService />
         </main>
       </div>
     );
