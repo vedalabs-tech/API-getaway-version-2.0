@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Auth from './Auth';
+import Landing from './Landing';
 import Layout from './Layout';
 import Dashboard from './views/Dashboard';
 import Analytics from './views/Analytics';
@@ -22,6 +23,7 @@ export type LogEntry = {
 export default function App() {
   const [email, setEmail] = useState<string | null>(localStorage.getItem('veda_email'));
   const [name, setName] = useState<string | null>(localStorage.getItem('veda_name'));
+  const [showAuth, setShowAuth] = useState(false);
   const [currentView, setCurrentView] = useState('dashboard');
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [healthScore, setHealthScore] = useState<number>(100);
@@ -75,7 +77,10 @@ export default function App() {
   };
 
   if (!email) {
-    return <Auth onLogin={handleLogin} />;
+    if (showAuth) {
+      return <Auth onLogin={handleLogin} />;
+    }
+    return <Landing onStart={() => setShowAuth(true)} />;
   }
 
   const renderView = () => {
