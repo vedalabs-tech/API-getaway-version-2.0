@@ -35,12 +35,15 @@ export default function Landing({ onStart }: LandingProps) {
           API Gateway v1.0 Live
         </div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-8 leading-tight">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-4 leading-tight">
+          Veda Labs
+        </h1>
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-8 text-gray-800 dark:text-gray-200">
           Enterprise API Gateway <br className="hidden sm:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
             for Foundation Models
           </span>
-        </h1>
+        </h2>
         
         <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mb-12 leading-relaxed">
           Veda Labs provides a secure, low-latency API infrastructure for integrating AI models into your applications. Experience seamless scalability, comprehensive usage analytics, and robust rate limiting with a strict zero-data-training policy.
@@ -88,9 +91,15 @@ export default function Landing({ onStart }: LandingProps) {
       </main>
       
       {/* Footer */}
-      <footer className="w-full max-w-7xl mx-auto px-6 py-8 border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500">
-        <p>Proudly developed in India, made for Bharat 🇮🇳</p>
-        <p className="mt-1">&copy; {new Date().getFullYear()} Veda Labs. All rights reserved.</p>
+      <footer className="w-full max-w-7xl mx-auto px-6 py-8 border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+          <p>Proudly developed in India, made for Bharat 🇮🇳</p>
+          <p className="mt-1">&copy; {new Date().getFullYear()} Veda Labs. All rights reserved.</p>
+        </div>
+        <div className="flex gap-4">
+          <a href="/privacy" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Privacy Policy</a>
+          <a href="/terms" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Terms of Service</a>
+        </div>
       </footer>
     </div>
   );
