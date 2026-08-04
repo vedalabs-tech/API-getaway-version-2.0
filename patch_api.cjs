@@ -1,4 +1,6 @@
-const GAS_URL = "https://script.google.com/macros/s/AKfycby63Fni4IEJmNJWsweBneSxbOgsYd9zBp7JskVtvKWCxaxJtjz0nnGETM6cfr1r39Ii/exec";
+const fs = require('fs');
+
+const apiCode = `const GAS_URL = "https://script.google.com/macros/s/AKfycby63Fni4IEJmNJWsweBneSxbOgsYd9zBp7JskVtvKWCxaxJtjz0nnGETM6cfr1r39Ii/exec";
 
 export async function callAPI(payload: any) {
   try {
@@ -20,3 +22,6 @@ export async function callAPI(payload: any) {
     return null;
   }
 }
+`;
+
+fs.writeFileSync('src/api.ts', apiCode);
